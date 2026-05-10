@@ -1,15 +1,15 @@
-"use client";
 import { Mail, Phone, MapPin, FileText } from "lucide-react";
 
 export function Contact() {
     return (
-        <section id="contact" className="py-24 px-4">
-            <div className="max-w-4xl mx-auto text-center space-y-10">
+        <section id="contact" className="relative py-24 px-4 overflow-hidden">
+            
+            <div className="relative z-10 max-w-4xl mx-auto text-center space-y-10">
 
                 {/* Header */}
                 <div className="space-y-3">
-                    <h2 className="text-3xl md:text-5xl font-bold text-primary">
-                        Let&apos;s Connect
+                    <h2 className="text-3xl md:text-5xl font-bold text-white">
+                        Let&apos;s <span className="text-primary italic">Connect</span>
                     </h2>
                     <p className="text-muted-foreground text-sm md:text-base">
                         Interested in working together? Feel free to reach out!

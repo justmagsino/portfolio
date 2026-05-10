@@ -1,17 +1,17 @@
 "use client"
 
 import { ArrowRight, MessageCircle } from "lucide-react";
-import { Boxes } from "@/components/ui/background-boxes";
 import { cn } from "@/lib/utils";
+import { ShootingStars } from "@/views/components/ui/shooting-stars";
 
 export function Hero() {
     return (
-        <section className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+        <section id="home" className="relative w-full h-screen overflow-hidden flex flex-col items-center justify-center">
+            {/* Background Effects */}
+            <ShootingStars />
+            
             {/* Radial mask so centre is transparent and edges fade to bg */}
             <div className="absolute inset-0 w-full h-full bg-background z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
-
-            {/* Boxes grid background */}
-            <Boxes />
 
             {/* Hero content */}
             <div className="relative z-30 text-center space-y-6 px-4 max-w-4xl">
@@ -19,7 +19,7 @@ export function Hero() {
                     Full Stack Developer
                 </p>
                 <h1 
-                    className={cn("text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight transition-all duration-700")}
+                    className={cn("text-3xl md:text-6xl font-bold tracking-tight text-white leading-tight transition-all duration-700 break-words")}
                     style={{ textShadow: "0 0 20px rgba(0, 210, 255, 0.3), 0 0 40px rgba(0, 210, 255, 0.1)" }}
                 >
                     Justine Leonard V. Magsino

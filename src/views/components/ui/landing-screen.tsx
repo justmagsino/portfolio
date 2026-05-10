@@ -71,7 +71,7 @@ export function LandingScreen({ onComplete }: LandingScreenProps) {
                             <GhostCharacter />
 
                             <div className="space-y-4">
-                                <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.2em] text-white whitespace-nowrap">
+                                <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.15em] text-white">
                                     Justine Leonard V. Magsino
                                 </h2>
                                 <div className="h-0.5 w-16 bg-primary mx-auto rounded-full shadow-[0_0_15px_rgba(0,136,170,0.6)]" />

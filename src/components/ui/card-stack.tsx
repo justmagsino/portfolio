@@ -123,6 +123,31 @@ export function CardStack<T extends CardStackItem>({
     const reduceMotion = useReducedMotion();
     const len = items.length;
 
+    const [dims, setDims] = React.useState({ width: cardWidth, height: cardHeight });
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const updateDims = () => {
+            const w = window.innerWidth;
+            const mobile = w < 768;
+            setIsMobile(mobile);
+            if (mobile) {
+                setDims({
+                    width: Math.min(w - 40, 340),
+                    height: 420 // Taller on mobile for content
+                });
+            } else {
+                setDims({ width: cardWidth, height: cardHeight });
+            }
+        };
+        updateDims();
+        window.addEventListener("resize", updateDims);
+        return () => window.removeEventListener("resize", updateDims);
+    }, [cardWidth, cardHeight]);
+
+    const currentWidth = dims.width;
+    const currentHeight = dims.height;
+
     const [active, setActive] = React.useState(() =>
         wrapIndex(initialIndex, len),
     );
@@ -140,9 +165,11 @@ export function CardStack<T extends CardStackItem>({
     }, [active]);
 
     const maxOffset = Math.max(0, Math.floor(maxVisible / 2));
+    const currentOverlap = isMobile ? 0.6 : overlap;
+    const currentSpread = isMobile ? 30 : spreadDeg;
 
-    const cardSpacing = Math.max(10, Math.round(cardWidth * (1 - overlap)));
-    const stepDeg = maxOffset > 0 ? spreadDeg / maxOffset : 0;
+    const cardSpacing = Math.max(10, Math.round(currentWidth * (1 - currentOverlap)));
+    const stepDeg = maxOffset > 0 ? currentSpread / maxOffset : 0;
 
     const canGoPrev = loop || active > 0;
     const canGoNext = loop || active < len - 1;
@@ -205,7 +232,7 @@ export function CardStack<T extends CardStackItem>({
             {/* Stage */}
             <div
                 className="relative w-full"
-                style={{ height: Math.max(380, cardHeight + 80) }}
+                style={{ height: Math.max(isMobile ? 480 : 380, currentHeight + 80) }}
                 tabIndex={0}
                 onKeyDown={onKeyDown}
             >
@@ -262,15 +289,15 @@ export function CardStack<T extends CardStackItem>({
                                         if (reduceMotion) return;
                                         const travel = info.offset.x;
                                         const v = info.velocity.x;
-                                        const threshold = Math.min(160, cardWidth * 0.22);
-
+                                        const threshold = Math.min(160, currentWidth * 0.22);
+ 
                                         // swipe logic
                                         if (travel > threshold || v > 650) prev();
                                         else if (travel < -threshold || v < -650) next();
                                     },
                                 }
                                 : {};
-
+ 
                             return (
                                 <motion.div
                                     key={item.id}
@@ -282,8 +309,8 @@ export function CardStack<T extends CardStackItem>({
                                             : "cursor-pointer",
                                     )}
                                     style={{
-                                        width: cardWidth,
-                                        height: cardHeight,
+                                        width: currentWidth,
+                                        height: currentHeight,
                                         zIndex,
                                         transformStyle: "preserve-3d",
                                     }}
@@ -382,6 +409,7 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
                         src={item.imageSrc}
                         alt=""
                         fill
+                        sizes="100vw"
                         className="object-cover scale-110 blur-2xl opacity-50"
                         draggable={false}
                     />
@@ -390,15 +418,20 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
 
             {/* main image */}
             <div className="absolute top-0 left-0 right-0 h-[70%] flex items-center justify-center p-6">
+                {/* Loading Placeholder */}
+                <div className="absolute inset-0 bg-neutral-900/50 animate-pulse" />
+                
                 {item.imageSrc ? (
                     <Image
                         src={item.imageSrc}
                         alt={item.title}
                         fill
+                        quality={75}
                         sizes="(max-width: 768px) 100vw, 520px"
-                        className="object-contain transition-transform duration-500 group-hover/card:scale-105"
+                        className="object-contain transition-all duration-700 group-hover/card:scale-105 opacity-0 data-[loaded=true]:opacity-100"
                         draggable={false}
                         priority={active}
+                        onLoad={(e) => e.currentTarget.setAttribute("data-loaded", "true")}
                     />
                 ) : (
                     <div className="flex h-full w-full items-center justify-center bg-secondary text-sm text-muted-foreground">

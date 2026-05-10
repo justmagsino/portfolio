@@ -114,16 +114,25 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     onClick={() => setFullscreen(true)}
                     title="Click to fullscreen"
                 >
+                    {/* Loading Placeholder */}
+                    <div id={`shimmer-${project.id}-${current}`} className="absolute inset-0 bg-neutral-900/50 animate-pulse" />
+                    
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={images[current]}
                         alt={`${project.title} screenshot ${current + 1}`}
+                        className="opacity-0 transition-opacity duration-500 relative z-[1]"
+                        onLoad={(e) => {
+                            e.currentTarget.style.opacity = "1"
+                            const shimmer = document.getElementById(`shimmer-${project.id}-${current}`)
+                            if (shimmer) shimmer.style.display = "none"
+                        }}
                         style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", backgroundColor: "#000" }}
                         draggable={false}
                     />
 
                     {/* Fullscreen hint */}
-                    <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-1 rounded-md bg-black/50 text-white/50 text-xs">
+                    <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-md bg-black/50 text-white/50 text-xs">
                         <Maximize2 className="w-3 h-3" /> Click to expand
                     </div>
 
@@ -135,11 +144,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     {images.length > 1 && (
                         <>
                             <button onClick={(e) => { e.stopPropagation(); prev(); }}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:bg-black/90 text-white transition-all">
+                                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:bg-black/90 text-white transition-all">
                                 <ChevronLeft className="w-4 h-4" />
                             </button>
                             <button onClick={(e) => { e.stopPropagation(); next(); }}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:bg-black/90 text-white transition-all">
+                                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:bg-black/90 text-white transition-all">
                                 <ChevronRight className="w-4 h-4" />
                             </button>
 

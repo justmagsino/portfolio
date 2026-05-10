@@ -16,32 +16,47 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <motion.div 
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                initial="hidden"
+                animate="show"
+                variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                        opacity: 1,
+                        transition: {
+                            staggerChildren: 0.1
+                        }
+                    }
+                }}
+            >
                 {projects.map((project, index) => (
                     <motion.div
                         key={project.id}
+                        variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            show: { opacity: 1, y: 0 }
+                        }}
                         className="group relative bg-card/20 border border-white/5 rounded-3xl overflow-hidden hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 cursor-pointer"
                         onClick={() => setSelected(project)}
                         whileHover="hovered"
                     >
                         {/* Image Container */}
                         <div className="relative h-64 w-full overflow-hidden bg-black/40">
-                            {/* Background Blur */}
-                            <Image
-                                src={project.image}
-                                alt=""
-                                fill
-                                className="object-cover blur-2xl opacity-40 scale-110"
-                                draggable={false}
-                            />
-                            {/* Main Image */}
+                            {/* Loading Shimmer/Placeholder */}
+                            <div className="absolute inset-0 bg-neutral-800/50 animate-pulse" />
+                            
+                            {/* Main Image Only - Blur removed for performance */}
                             <Image
                                 src={project.image}
                                 alt={project.title}
                                 fill
+                                quality={75}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                className="object-contain p-4 transition-transform duration-700 group-hover:scale-110"
+                                className="object-contain p-4 transition-all duration-700 group-hover:scale-110 opacity-0 data-[loaded=true]:opacity-100"
                                 priority={index <= 2}
+                                loading={index <= 2 ? "eager" : "lazy"}
+                                onLoad={(e) => e.currentTarget.setAttribute("data-loaded", "true")}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         </div>
@@ -89,7 +104,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                         </div>
                     </motion.div>
                 ))}
-            </div>
+            </motion.div>
 
             <ProjectModal project={selected} onClose={() => setSelected(null)} />
         </>

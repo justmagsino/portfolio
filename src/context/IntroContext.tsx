@@ -10,10 +10,30 @@ interface IntroContextType {
 const IntroContext = createContext<IntroContextType | undefined>(undefined)
 
 export function IntroProvider({ children }: { children: React.ReactNode }) {
-    const [showIntro, setShowIntro] = useState(true)
+    const [showIntro, setShowIntro] = useState(false)
+    const [isInitialized, setIsInitialized] = useState(false)
+
+    useEffect(() => {
+        // Check if intro was already seen in this session
+        const hasSeenIntro = sessionStorage.getItem("hasSeenIntro")
+        if (!hasSeenIntro) {
+            setShowIntro(true)
+        }
+        setIsInitialized(true)
+    }, [])
+
+    const handleSetShowIntro = (show: boolean) => {
+        if (!show) {
+            sessionStorage.setItem("hasSeenIntro", "true")
+        }
+        setShowIntro(show)
+    }
+
+    // Prevent flash of content or intro
+    if (!isInitialized) return <div className="bg-background min-h-screen" />
 
     return (
-        <IntroContext.Provider value={{ showIntro, setShowIntro }}>
+        <IntroContext.Provider value={{ showIntro, setShowIntro: handleSetShowIntro }}>
             {children}
         </IntroContext.Provider>
     )

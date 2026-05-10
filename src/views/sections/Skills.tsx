@@ -92,8 +92,9 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export function Skills({ skills }: SkillsProps) {
     return (
-        <section id="skills" className="py-24 px-4">
-            <div className="max-w-5xl mx-auto space-y-14">
+        <section id="skills" className="relative py-24 px-4 overflow-hidden">
+            
+            <div className="relative z-10 max-w-5xl mx-auto space-y-14">
                 {/* Header */}
                 <div className="text-center space-y-3">
                     <p className="text-primary text-sm font-semibold uppercase tracking-widest">Expertise</p>

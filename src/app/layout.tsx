@@ -4,6 +4,7 @@ import "./globals.css";
 import { ScrollToTop } from "@/views/components/ui/scroll-to-top";
 import { NeonCursor } from "@/views/components/ui/neon-cursor";
 import { Navbar } from "@/views/components/ui/navbar";
+import { PageLoader } from "@/views/components/ui/page-loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
         <IntroProvider>
+          <PageLoader />
           <Navbar />
           <NeonCursor />
           {children}

@@ -1,13 +1,15 @@
 "use client"
 
 import { useState } from "react";
-import { Hero } from "@/views/sections/Hero";
-import { Projects } from "@/views/sections/Projects";
-import { Skills } from "@/views/sections/Skills";
-import { Contact } from "@/views/sections/Contact";
+import dynamic from "next/dynamic";
 import { getPortfolioData } from "@/controllers/portfolioController";
 import { LandingScreen } from "@/views/components/ui/landing-screen";
 import { useIntro } from "@/context/IntroContext";
+
+const Hero = dynamic(() => import("@/views/sections/Hero").then(m => m.Hero), { ssr: true });
+const Projects = dynamic(() => import("@/views/sections/Projects").then(m => m.Projects), { ssr: true });
+const Skills = dynamic(() => import("@/views/sections/Skills").then(m => m.Skills), { ssr: true });
+const Contact = dynamic(() => import("@/views/sections/Contact").then(m => m.Contact), { ssr: true });
 
 export default function Home() {
     const { projects, skills } = getPortfolioData();
@@ -24,7 +26,7 @@ export default function Home() {
                 <Contact />
 
                 <footer className="py-8 px-4 border-t border-border/30 text-center text-muted-foreground/50 text-xs">
-                    <p>© {new Date().getFullYear()} Justine Leonard V. Magsino. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} Justine Leonard V. Magsino.</p>
                 </footer>
             </main>
         </>
