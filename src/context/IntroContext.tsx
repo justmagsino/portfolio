@@ -25,6 +25,8 @@ export function IntroProvider({ children }: { children: React.ReactNode }) {
     const handleSetShowIntro = (show: boolean) => {
         if (!show) {
             sessionStorage.setItem("hasSeenIntro", "true")
+        } else {
+            sessionStorage.removeItem("hasSeenIntro")
         }
         setShowIntro(show)
     }

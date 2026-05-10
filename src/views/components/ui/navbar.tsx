@@ -132,19 +132,19 @@ export const Navbar = () => {
             >
             {/* Left side: Logo */}
             <div className="flex items-center px-8">
-                <button 
-                    onClick={() => {
+                <Link 
+                    href="/"
+                    onClick={(e) => {
                         if (isHomePage) {
+                            e.preventDefault();
                             setShowIntro(true)
                             window.scrollTo({ top: 0, behavior: "smooth" })
-                        } else {
-                            router.push("/")
                         }
                     }}
                     className="text-2xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors cursor-pointer"
                 >
                     LEON
-                </button>
+                </Link>
             </div>
 
             {/* Center: Nav Links (Desktop) */}

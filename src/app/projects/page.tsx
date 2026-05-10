@@ -14,7 +14,7 @@ export default function ProjectsPage() {
                 {/* Back Button */}
                 <div className="flex justify-start">
                     <Link
-                        href="/#projects"
+                        href="/"
                         className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group font-bold text-sm uppercase tracking-widest cursor-pointer"
                     >
                         <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />

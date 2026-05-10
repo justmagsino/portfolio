@@ -34,7 +34,7 @@ export function LandingScreen({ onComplete }: LandingScreenProps) {
                         y: "-100%",
                         transition: { duration: 0.8, ease: [0.93, 0.035, 0.35, 0.815] }
                     }}
-                    className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background overflow-hidden"
+                    className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background overflow-hidden touch-none"
                 >
                     {/* Theme Toggle */}
                     <div className="absolute top-5 right-6 z-30">

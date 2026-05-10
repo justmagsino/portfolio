@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { getPortfolioData } from "@/controllers/portfolioController";
 import { LandingScreen } from "@/views/components/ui/landing-screen";
