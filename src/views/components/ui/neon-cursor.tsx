@@ -13,10 +13,10 @@ export const NeonCursor = () => {
         const width = window.innerWidth
         const height = window.innerHeight
 
-        // Configuration
+        // Configuration optimized for performance
         const config = {
-            shaderPoints: 16,
-            curvePoints: 60,
+            shaderPoints: 8, // Reduced from 16 to halve shader loops
+            curvePoints: 40, // Reduced from 60 for faster curve interpolation
             curveLerp: 0.95, // Increased from 0.85 to make tail snap faster
             radius1: 2,
             radius2: 15,
@@ -34,8 +34,12 @@ export const NeonCursor = () => {
         const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
         const renderer = new THREE.WebGLRenderer({ 
             alpha: true, 
-            antialias: true 
+            antialias: false, // Disabled for performance
+            powerPreference: "high-performance"
         })
+        // Cap pixel ratio to 0.5x to reduce pixel calculations by 4x for massive performance boost
+        // The blurriness fits the neon style anyway.
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 0.5))
         renderer.setSize(width, height)
         renderer.setClearColor(0x000000, 0) // Transparent background
         container.appendChild(renderer.domElement)

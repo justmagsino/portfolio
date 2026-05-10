@@ -21,6 +21,8 @@ export function AnimatedClouds() {
                     background-repeat: repeat-x;
                     background-position: 0 150px, 0 250px, 100px 200px;
                     animation: wind 25s linear infinite;
+                    will-change: background-position;
+                    transform: translateZ(0);
                 }
                 @keyframes wind {
                     0% {
