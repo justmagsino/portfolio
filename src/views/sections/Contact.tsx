@@ -8,7 +8,7 @@ export function Contact() {
 
                 {/* Header */}
                 <div className="space-y-3">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white">
+                    <h2 className="text-3xl md:text-5xl font-bold text-foreground">
                         Let&apos;s <span className="text-primary italic">Connect</span>
                     </h2>
                     <p className="text-muted-foreground text-sm md:text-base">

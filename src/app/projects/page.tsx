@@ -15,7 +15,7 @@ export default function ProjectsPage() {
                 <div className="flex justify-start">
                     <Link
                         href="/#projects"
-                        className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group font-bold text-sm uppercase tracking-widest cursor-pointer"
+                        className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group font-bold text-sm uppercase tracking-widest cursor-pointer"
                     >
                         <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-1" />
                         Back
@@ -23,7 +23,7 @@ export default function ProjectsPage() {
                 </div>
 
                 <div className="text-center space-y-4">
-                    <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-white">
+                    <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter text-foreground">
                         All <span className="text-primary italic">Projects</span>
                     </h1>
                     <p className="text-muted-foreground max-w-2xl mx-auto text-lg">

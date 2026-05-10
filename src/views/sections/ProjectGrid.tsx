@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Project } from "@/models/portfolio"
 import { ProjectModal } from "@/views/components/ui/project-modal"
 import Image from "next/image"
-import { ExternalLink, Github } from "lucide-react"
+
 import { motion } from "framer-motion"
 
 interface ProjectGridProps {
@@ -37,15 +37,12 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                             hidden: { opacity: 0, y: 20 },
                             show: { opacity: 1, y: 0 }
                         }}
-                        className="group relative bg-card/20 border border-white/5 rounded-3xl overflow-hidden hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 cursor-pointer"
+                        className="group relative bg-card border border-border/50 rounded-3xl overflow-hidden hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 cursor-pointer"
                         onClick={() => setSelected(project)}
                         whileHover="hovered"
                     >
                         {/* Image Container */}
-                        <div className="relative h-64 w-full overflow-hidden bg-black/40">
-                            {/* Loading Shimmer/Placeholder */}
-                            <div className="absolute inset-0 bg-neutral-800/50 animate-pulse" />
-                            
+                        <div className="relative h-64 w-full overflow-hidden bg-muted/30 dark:bg-black/40">
                             {/* Main Image Only - Blur removed for performance */}
                             <Image
                                 src={project.image}
@@ -53,10 +50,9 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                                 fill
                                 quality={75}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                className="object-contain p-4 transition-all duration-700 group-hover:scale-110 opacity-0 data-[loaded=true]:opacity-100"
+                                className="object-contain p-4 transition-all duration-700 group-hover:scale-110"
                                 priority={index <= 2}
                                 loading={index <= 2 ? "eager" : "lazy"}
-                                onLoad={(e) => e.currentTarget.setAttribute("data-loaded", "true")}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         </div>
@@ -71,7 +67,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                                         }}
                                         transition={{ duration: 3, ease: "linear" }}
                                     >
-                                        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors whitespace-nowrap">
+                                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
                                             {project.title}
                                         </h3>
                                     </motion.div>

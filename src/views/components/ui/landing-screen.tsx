@@ -5,8 +5,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 
 import { useIntro } from "@/context/IntroContext"
+import { useTheme } from "@/context/ThemeContext"
 import { NeonCursor } from "./neon-cursor"
 import { GhostCharacter } from "./ghost-character"
+import { ThemeToggle } from "./theme-toggle"
+import { ShootingStars } from "@/views/components/ui/shooting-stars"
+import { AnimatedClouds } from "@/views/components/ui/animated-clouds"
 
 interface LandingScreenProps {
     onComplete: () => void
@@ -14,6 +18,7 @@ interface LandingScreenProps {
 
 export function LandingScreen({ onComplete }: LandingScreenProps) {
     const { showIntro, setShowIntro } = useIntro()
+    const { theme, toggleTheme } = useTheme()
 
     const handleStart = () => {
         setShowIntro(false)
@@ -31,6 +36,18 @@ export function LandingScreen({ onComplete }: LandingScreenProps) {
                     }}
                     className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background overflow-hidden"
                 >
+                    {/* Theme Toggle */}
+                    <div className="absolute top-5 right-6 z-30">
+                        <ThemeToggle />
+                    </div>
+                    {/* Background Effects */}
+                    <div className="absolute inset-0 z-0 hidden dark:block">
+                        <ShootingStars />
+                    </div>
+                    <div className="absolute inset-0 z-0 dark:hidden block">
+                        <AnimatedClouds />
+                    </div>
+
                     {/* Neon Cursor for Intro (Higher Z-Index) */}
                     <div className="absolute inset-0 z-0">
                         <NeonCursor />
@@ -71,7 +88,7 @@ export function LandingScreen({ onComplete }: LandingScreenProps) {
                             <GhostCharacter />
 
                             <div className="space-y-4">
-                                <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.15em] text-white">
+                                <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-[0.15em] text-foreground">
                                     Justine Leonard V. Magsino
                                 </h2>
                                 <div className="h-0.5 w-16 bg-primary mx-auto rounded-full shadow-[0_0_15px_rgba(0,136,170,0.6)]" />

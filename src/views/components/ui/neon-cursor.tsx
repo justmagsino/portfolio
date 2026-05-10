@@ -50,7 +50,7 @@ export const NeonCursor = () => {
         const lastMouse = new THREE.Vector2()
         const mouseVel = new THREE.Vector3()
         let isMoving = false
-        let idleTimer: any
+        let idleTimer: ReturnType<typeof setTimeout> | undefined
 
         // Uniforms
         const uniforms = {
@@ -244,7 +244,7 @@ export const NeonCursor = () => {
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 pointer-events-none z-[-1]"
+            className="fixed inset-0 pointer-events-none z-[5]"
             id="neon-cursor"
         />
     )

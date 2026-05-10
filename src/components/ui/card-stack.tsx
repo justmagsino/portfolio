@@ -399,28 +399,11 @@ import Image from "next/image";
 function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean }) {
     return (
         <motion.div 
-            className="relative h-full w-full bg-black group/card"
+            className="relative h-full w-full bg-card group/card"
             whileHover="hovered"
         >
-            {/* background blur to fill deadspace without zooming the main image */}
-            <div className="absolute inset-0 overflow-hidden">
-                {item.imageSrc && (
-                    <Image
-                        src={item.imageSrc}
-                        alt=""
-                        fill
-                        sizes="100vw"
-                        className="object-cover scale-110 blur-2xl opacity-50"
-                        draggable={false}
-                    />
-                )}
-            </div>
-
             {/* main image */}
             <div className="absolute top-0 left-0 right-0 h-[70%] flex items-center justify-center p-6">
-                {/* Loading Placeholder */}
-                <div className="absolute inset-0 bg-neutral-900/50 animate-pulse" />
-                
                 {item.imageSrc ? (
                     <Image
                         src={item.imageSrc}
@@ -428,23 +411,22 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
                         fill
                         quality={75}
                         sizes="(max-width: 768px) 100vw, 520px"
-                        className="object-contain transition-all duration-700 group-hover/card:scale-105 opacity-0 data-[loaded=true]:opacity-100"
+                        className="object-contain transition-all duration-700 group-hover/card:scale-105"
                         draggable={false}
                         priority={active}
-                        onLoad={(e) => e.currentTarget.setAttribute("data-loaded", "true")}
                     />
                 ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-secondary text-sm text-muted-foreground">
+                    <div className="flex h-full w-full items-center justify-center bg-muted text-sm text-muted-foreground">
                         No image
                     </div>
                 )}
             </div>
 
             {/* Subtle overlay for better text contrast */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 pointer-events-none" />
 
             {/* Content block at the bottom */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-white/10 backdrop-blur-md border-t border-white/10 transform transition-transform duration-500 group-hover/card:translate-y-0">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-card/40 backdrop-blur-md border-t border-border/50 transform transition-transform duration-500 group-hover/card:translate-y-0">
                 <div className="space-y-3">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex-1 overflow-hidden">
@@ -454,7 +436,7 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
                                 }}
                                 transition={{ duration: 3, ease: "linear" }}
                             >
-                                <h3 className="text-xl font-bold text-white tracking-tight whitespace-nowrap">
+                                <h3 className="text-xl font-bold text-foreground tracking-tight whitespace-nowrap">
                                     {item.title}
                                 </h3>
                             </motion.div>
@@ -479,7 +461,7 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
                                 {item.tags.map((tag) => (
                                     <span 
                                         key={tag}
-                                        className="px-2 py-1 rounded bg-white/5 border border-white/10 text-[9px] font-bold text-white/70 uppercase tracking-wider whitespace-nowrap"
+                                        className="px-2 py-1 rounded bg-foreground/5 border border-border text-[9px] font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap"
                                     >
                                         {tag}
                                     </span>

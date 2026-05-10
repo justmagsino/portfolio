@@ -7,12 +7,16 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Menu } from "lucide-react"
+import { useTheme } from "@/context/ThemeContext"
+import { ThemeToggle } from "./theme-toggle"
+
 
 export const Navbar = () => {
     const [scrolled, setScrolled] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [activeSection, setActiveSection] = useState("home")
     const { setShowIntro } = useIntro()
+    const { theme, toggleTheme } = useTheme()
     const pathname = usePathname()
     const router = useRouter()
     const isHomePage = pathname === "/"
@@ -34,6 +38,7 @@ export const Navbar = () => {
 
     useEffect(() => {
         if (isProjectsPage) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setActiveSection("projects")
             return
         }
@@ -72,13 +77,9 @@ export const Navbar = () => {
         { name: "Contact", href: "#contact", id: "contact" },
     ]
 
-    const [mounted, setMounted] = useState(false)
+    // Component mounted
 
-    useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    const handleNavClick = (link: any, e: React.MouseEvent) => {
+    const handleNavClick = (link: { isExternal?: boolean, id: string, href: string, name: string }, e: React.MouseEvent) => {
         if (link.isExternal) return;
 
         setIsOpen(false);
@@ -125,7 +126,7 @@ export const Navbar = () => {
         <>
             <nav
                 className={cn(
-                    "fixed top-0 left-0 right-0 h-[70px] z-[100] transition-all duration-300 flex items-center justify-between border-b border-white/5 bg-background/80 backdrop-blur-md",
+                    "fixed top-0 left-0 right-0 h-[70px] z-[100] transition-all duration-300 flex items-center justify-between border-b border-border/50 bg-background/80 backdrop-blur-md",
                     scrolled ? "bg-background/95 border-primary/20 shadow-xl" : ""
                 )}
             >
@@ -140,7 +141,7 @@ export const Navbar = () => {
                             router.push("/")
                         }
                     }}
-                    className="text-2xl font-black uppercase tracking-tighter text-white hover:text-primary transition-colors cursor-pointer"
+                    className="text-2xl font-black uppercase tracking-tighter text-foreground hover:text-primary transition-colors cursor-pointer"
                 >
                     LEON
                 </button>
@@ -167,7 +168,7 @@ export const Navbar = () => {
                             rel={link.isExternal ? "noreferrer" : undefined}
                             className={cn(
                                 "flex-1 h-full flex items-center justify-center text-sm font-bold transition-all duration-300 tracking-widest uppercase relative",
-                                isActive ? "text-primary" : "text-white/60 hover:text-white"
+                                isActive ? "text-primary" : "text-foreground/60 hover:text-foreground"
                             )}
                             onClick={(e) => handleNavClick(link, e)}
                         >
@@ -184,14 +185,17 @@ export const Navbar = () => {
                 })}
             </div>
 
-            {/* Right side: Balance spacer */}
-            <div className="hidden md:block w-[120px]"></div>
+            {/* Right side: Theme Toggle */}
+            <div className="hidden md:flex items-center px-6">
+                <ThemeToggle />
+            </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden px-6">
+            {/* Mobile: Theme toggle + hamburger */}
+            <div className="md:hidden flex items-center gap-4 px-4">
+                <ThemeToggle />
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 text-white hover:text-primary transition-colors"
+                    className="p-2 text-foreground hover:text-primary transition-colors"
                     aria-label="Toggle menu"
                 >
                     {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}

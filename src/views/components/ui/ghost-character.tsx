@@ -55,11 +55,12 @@ function GhostSegment({ index }: { index: number }) {
                     </div>
                 </div>
             )}
-            
-            {/* Bubbling Particles (Subtle) */}
-            <div className="absolute inset-0 blur-[5px] opacity-30 pointer-events-none">
-                <div className="absolute w-[8px] h-[8px] bg-primary rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-ghost-bubbling" />
-            </div>
+            {/* Bubbling Particles (Subtle) - Only on body segments to avoid overlapping eyes */}
+            {!isFace && (
+                <div className="absolute inset-0 blur-[5px] opacity-30 pointer-events-none">
+                    <div className="absolute w-[8px] h-[8px] bg-primary rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-ghost-bubbling" />
+                </div>
+            )}
         </motion.div>
     )
 }

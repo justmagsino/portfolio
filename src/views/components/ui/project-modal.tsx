@@ -17,7 +17,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     const prev = useCallback(() => setCurrent((c) => (c - 1 + images.length) % images.length), [images.length]);
     const next = useCallback(() => setCurrent((c) => (c + 1) % images.length), [images.length]);
 
-    useEffect(() => { setCurrent(0); setFullscreen(false); }, [project]);
+    useEffect(() => { 
+        setCurrent(0); 
+        setFullscreen(false); 
+    }, [project]);
 
     useEffect(() => {
         if (!project) return;
@@ -97,37 +100,29 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             onClick={onClose}
         >
             <div
-                className="relative bg-[#0e1628] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+                className="relative bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
                 style={{ width: "100%", maxWidth: 680, maxHeight: "90vh", display: "flex", flexDirection: "column" }}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Close button */}
                 <button onClick={onClose}
-                    className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:border-white/30 text-white/70 hover:text-white transition-all">
+                    className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:border-white/30 text-white transition-all">
                     <X className="w-4 h-4" />
                 </button>
 
                 {/* ── IMAGE (click to fullscreen) ── */}
                 <div
-                    className="relative shrink-0 cursor-zoom-in p-6"
-                    style={{ height: 320, backgroundColor: "#000" }}
+                    className="relative shrink-0 cursor-zoom-in p-6 bg-muted/30 dark:bg-black"
+                    style={{ height: 320 }}
                     onClick={() => setFullscreen(true)}
                     title="Click to fullscreen"
                 >
-                    {/* Loading Placeholder */}
-                    <div id={`shimmer-${project.id}-${current}`} className="absolute inset-0 bg-neutral-900/50 animate-pulse" />
-                    
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={images[current]}
                         alt={`${project.title} screenshot ${current + 1}`}
-                        className="opacity-0 transition-opacity duration-500 relative z-[1]"
-                        onLoad={(e) => {
-                            e.currentTarget.style.opacity = "1"
-                            const shimmer = document.getElementById(`shimmer-${project.id}-${current}`)
-                            if (shimmer) shimmer.style.display = "none"
-                        }}
-                        style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", backgroundColor: "#000" }}
+                        className="relative z-[1]"
+                        style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
                         draggable={false}
                     />
 
@@ -137,8 +132,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </div>
 
                     {/* Bottom gradient */}
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12"
-                        style={{ background: "linear-gradient(to top, rgba(14,22,40,1), transparent)" }} />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-card to-transparent" />
 
                     {/* Prev/Next */}
                     {images.length > 1 && (
@@ -168,16 +162,15 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div style={{ overflowY: "auto", flex: 1 }}>
                     <div className="p-6 space-y-5">
                         {/* Title */}
-                        <h2 className="text-xl font-bold text-white">{project.title}</h2>
+                        <h2 className="text-xl font-bold text-foreground">{project.title}</h2>
 
                         {/* Description */}
-                        <p className="text-white/60 text-sm leading-relaxed text-justify">{project.description}</p>
+                        <p className="text-muted-foreground text-sm leading-relaxed text-justify">{project.description}</p>
 
                         {/* Tags */}
                         <div className="flex flex-wrap gap-2">
                             {project.tags.map((tag) => (
-                                <span key={tag} className="px-3 py-1 text-xs font-medium rounded-full border border-white/10 text-white/60"
-                                    style={{ backgroundColor: "rgba(255,255,255,0.04)" }}>
+                                <span key={tag} className="px-3 py-1 text-xs font-medium rounded-full border border-border text-muted-foreground bg-foreground/5">
                                     {tag}
                                 </span>
                             ))}
@@ -186,14 +179,15 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                         {/* Thumbnail strip */}
                         {images.length > 1 && (
                             <div>
-                                <p className="text-xs uppercase tracking-widest text-white/30 mb-3 font-semibold">Screenshots</p>
+                                <p className="text-xs uppercase tracking-widest text-muted-foreground/60 mb-3 font-semibold">Screenshots</p>
                                 <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
                                     {images.map((src, i) => (
                                         <button key={i} onClick={() => setCurrent(i)}
+                                            className="bg-muted/50 dark:bg-black"
                                             style={{
                                                 flexShrink: 0, width: 96, height: 64, borderRadius: 8, overflow: "hidden",
-                                                border: `2px solid ${i === current ? "#38bdf8" : "rgba(255,255,255,0.12)"}`,
-                                                padding: 0, cursor: "pointer", transition: "border-color 0.2s", backgroundColor: "#000"
+                                                border: `2px solid ${i === current ? "hsl(var(--primary))" : "transparent"}`,
+                                                padding: 0, cursor: "pointer", transition: "border-color 0.2s"
                                             }}>
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img src={src} alt={`Screenshot ${i + 1}`}

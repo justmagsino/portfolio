@@ -9,6 +9,7 @@ export const PageLoader = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setLoading(true)
         const timeout = setTimeout(() => setLoading(false), 500)
         return () => clearTimeout(timeout)

@@ -5,6 +5,8 @@ import { ScrollToTop } from "@/views/components/ui/scroll-to-top";
 import { NeonCursor } from "@/views/components/ui/neon-cursor";
 import { Navbar } from "@/views/components/ui/navbar";
 import { PageLoader } from "@/views/components/ui/page-loader";
+import { IntroProvider } from "@/context/IntroContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,25 +23,25 @@ export const metadata: Metadata = {
   description: "Modern, high-performance portfolio showcasing full stack developer expertise.",
 };
 
-import { IntroProvider } from "@/context/IntroContext";
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
-        <IntroProvider>
-          <PageLoader />
-          <Navbar />
-          <NeonCursor />
-          {children}
-          <ScrollToTop />
-        </IntroProvider>
+        <ThemeProvider>
+          <IntroProvider>
+            <PageLoader />
+            <Navbar />
+            <NeonCursor />
+            {children}
+            <ScrollToTop />
+          </IntroProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

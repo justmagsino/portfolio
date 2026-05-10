@@ -1,10 +1,13 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React, { useEffect, useState } from "react"
 
 export const ShootingStars = () => {
-    const stars = useMemo(() => {
-        return Array.from({ length: 30 }).map((_, i) => {
+    const [stars, setStars] = useState<{ id: number, style: React.CSSProperties }[]>([])
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setStars(Array.from({ length: 30 }).map((_, i) => {
             const tailLength = Math.floor(Math.random() * (750 - 500 + 1) + 500) / 100
             const topOffset = Math.floor(Math.random() * 10000) / 100
             const fallDuration = Math.floor(Math.random() * (22000 - 14000 + 1) + 14000) / 1000
@@ -21,7 +24,7 @@ export const ShootingStars = () => {
                     "--start-x": `${startX}em`,
                 } as React.CSSProperties,
             }
-        })
+        }))
     }, [])
 
     return (
