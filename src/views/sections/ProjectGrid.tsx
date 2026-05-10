@@ -48,10 +48,19 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
 
                         {/* Info */}
                         <div className="p-6 space-y-4">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">
-                                    {project.title}
-                                </h3>
+                            <div className="flex items-center justify-between gap-4">
+                                <div className="flex-1 overflow-hidden">
+                                    <motion.div
+                                        variants={{
+                                            hovered: { x: "-20%" }
+                                        }}
+                                        transition={{ duration: 3, ease: "linear" }}
+                                    >
+                                        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors whitespace-nowrap">
+                                            {project.title}
+                                        </h3>
+                                    </motion.div>
+                                </div>
                                 {project.projectType && (
                                     <span className="px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary uppercase tracking-widest whitespace-nowrap">
                                         {project.projectType}

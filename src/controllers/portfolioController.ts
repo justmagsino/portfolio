@@ -70,8 +70,8 @@ export const getPortfolioData = (): PortfolioData => {
         },
         {
             id: "6",
-            title: "Sinegual Mobile",
-            description: "Sinegual Mobile is a mobile application version of an existing web-based trading platform designed to automatically execute trades using multiple trading strategies. The platform serves as an investment tool for generating passive income, especially for users who have little to no knowledge of trading. It provides a more accessible and user-friendly mobile experience while maintaining the core features of the original platform. However, like all investments and trading activities, it also involves financial risks.",
+            title: "SineguAlerts Mobile",
+            description: "SineguAlerts Mobile is a mobile application version of an existing web-based trading platform designed to automatically execute trades using multiple trading strategies. The platform serves as an investment tool for generating passive income, especially for users who have little to no knowledge of trading. It provides a more accessible and user-friendly mobile experience while maintaining the core features of the original platform. However, like all investments and trading activities, it also involves financial risks.",
             image: "/myprojects/sinegu1.jpg",
             images: ["/myprojects/sinegu1.jpg", "/myprojects/sinegu2.jpg", "/myprojects/sinegu3.jpg", "/myprojects/sinegu4.jpg", "/myprojects/sinegu5.jpg"],
             tags: ["Flutter", "Laravel", "MySQL", "APK"],
@@ -89,6 +89,17 @@ export const getPortfolioData = (): PortfolioData => {
             githubUrl: "https://github.com",
             liveUrl: "https://example.com",
             projectType: "Team (2)",
+        },
+        {
+            id: "9",
+            title: "Leon Portfolio",
+            description: "A modern, high-performance portfolio website designed to showcase professional engineering work. Built with Next.js and Tailwind CSS, it features dynamic animations, smooth transitions, and a premium aesthetic to provide an engaging user experience. The platform highlights various full-stack projects, technical skills, and professional achievements with a focus on clean code and performance.",
+            image: "/myprojects/prtfl1.png",
+            images: ["/myprojects/prtfl1.png", "/myprojects/prtfl2.png", "/myprojects/prtfl3.png", "/myprojects/prtfl3.1.png", "/myprojects/prtfl4.png", "/myprojects/prtfl5.png"],
+            tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Lucide React"],
+            githubUrl: "https://github.com",
+            liveUrl: "https://example.com",
+            projectType: "Solo",
         },
     ];
 
