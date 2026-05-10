@@ -413,7 +413,8 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
                         sizes="(max-width: 768px) 100vw, 520px"
                         className="object-contain transition-all duration-700 group-hover/card:scale-105"
                         draggable={false}
-                        priority={active}
+                        priority={false}
+                        loading="lazy"
                     />
                 ) : (
                     <div className="flex h-full w-full items-center justify-center bg-muted text-sm text-muted-foreground">
