@@ -50,7 +50,7 @@ function GhostSegment({ index }: { index: number }) {
                     <div className="absolute inset-0 rounded-full animate-ghost-look">
                         <div className="absolute bottom-[20px] left-[40px] w-[20px] h-[10px] rounded-b-[150px] border-b-2 border-r-2 border-l-2 border-primary">
                             {/* Eyes */}
-                            <div className="absolute -top-[25px] -left-[17.5px] w-[7.5px] h-[7.5px] bg-primary rounded-full shadow-[45px_0_0_rgb(0,136,170)]" />
+                            <div className="absolute -top-[25px] -left-[17.5px] w-[7.5px] h-[7.5px] bg-primary text-primary rounded-full shadow-[45px_0_0_currentColor]" />
                         </div>
                     </div>
                 </div>
