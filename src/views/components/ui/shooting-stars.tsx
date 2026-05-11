@@ -6,8 +6,10 @@ export const ShootingStars = () => {
     const [stars, setStars] = useState<{ id: number, style: React.CSSProperties }[]>([])
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setStars(Array.from({ length: 30 }).map((_, i) => {
+        const isMobile = window.innerWidth < 768;
+        const count = isMobile ? 12 : 30;
+        
+        setStars(Array.from({ length: count }).map((_, i) => {
             const tailLength = Math.floor(Math.random() * (750 - 500 + 1) + 500) / 100
             const topOffset = Math.floor(Math.random() * 10000) / 100
             const fallDuration = Math.floor(Math.random() * (22000 - 14000 + 1) + 14000) / 1000
@@ -26,6 +28,7 @@ export const ShootingStars = () => {
             }
         }))
     }, [])
+
 
     return (
         <div className="shooting-stars-container absolute inset-0 w-full h-full pointer-events-none z-10 overflow-hidden" style={{ contain: "strict" }}>

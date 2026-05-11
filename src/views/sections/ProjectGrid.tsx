@@ -90,8 +90,9 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                                     {project.tags.map((tag) => (
                                         <span 
                                             key={tag}
-                                            className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-white/5 border border-white/10 text-neutral-400 group-hover:text-neutral-300 transition-colors whitespace-nowrap"
+                                            className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-foreground/5 border border-border text-muted-foreground group-hover:text-primary transition-colors whitespace-nowrap"
                                         >
+
                                             {tag}
                                         </span>
                                     ))}

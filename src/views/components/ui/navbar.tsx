@@ -238,8 +238,9 @@ export const Navbar = () => {
                                             rel={link.isExternal ? "noreferrer" : undefined}
                                             className={cn(
                                                 "text-3xl font-black uppercase tracking-widest transition-colors",
-                                                isActive ? "text-primary" : "text-white/60 hover:text-primary"
+                                                isActive ? "text-primary" : "text-foreground/60 hover:text-primary"
                                             )}
+
                                             onClick={(e) => handleNavClick(link, e)}
                                         >
                                             {link.name}

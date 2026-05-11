@@ -9,6 +9,9 @@ export const NeonCursor = () => {
     useEffect(() => {
         if (typeof window === "undefined" || !containerRef.current) return
 
+        // Disable on mobile for performance (no cursor on mobile)
+        if (window.innerWidth < 768) return
+
         const container = containerRef.current
         const width = window.innerWidth
         const height = window.innerHeight

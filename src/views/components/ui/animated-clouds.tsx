@@ -21,9 +21,21 @@ export function AnimatedClouds() {
                     background-repeat: repeat-x;
                     background-position: 0 150px, 0 250px, 100px 200px;
                     animation: wind 25s linear infinite;
-                    will-change: background-position;
+                    will-change: transform;
                     transform: translateZ(0);
                 }
+
+                @media (max-width: 768px) {
+                    .cloud-images {
+                        /* Disable filters on mobile for performance */
+                        background-image: 
+                            url("data:image/svg+xml,%3Csvg width='1000' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' opacity='0.7' d='M250 300 Q150 300 150 200 Q150 120 250 120 Q300 50 450 50 Q600 50 650 120 Q750 120 750 200 Q750 300 650 300 Z'/%3E%3C/svg%3E"),
+                            url("data:image/svg+xml,%3Csvg width='1200' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' opacity='0.5' d='M300 350 Q180 350 180 250 Q180 150 300 150 Q380 70 550 70 Q720 70 800 150 Q920 150 920 250 Q920 350 800 350 Z'/%3E%3C/svg%3E");
+                        background-size: 800px auto, 1000px auto;
+                        animation-duration: 40s; /* Slower on mobile */
+                    }
+                }
+
                 @keyframes wind {
                     0% {
                         background-position: 0 150px, 0 250px, 100px 200px;
@@ -32,6 +44,7 @@ export function AnimatedClouds() {
                         background-position: 1000px 150px, 1200px 250px, 1100px 200px;
                     }
                 }
+
             `}</style>
         </div>
     );

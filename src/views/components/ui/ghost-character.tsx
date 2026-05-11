@@ -1,18 +1,24 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useTheme } from "@/context/ThemeContext"
 
 export function GhostCharacter() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+    const segmentCount = typeof window !== "undefined" && window.innerWidth < 768 ? 8 : 15;
+    
     return (
         <div className="relative w-[100px] h-[100px] mx-auto">
-            {[...Array(15)].map((_, i) => (
-                <GhostSegment key={i} index={i} />
+            {[...Array(segmentCount)].map((_, i) => (
+                <GhostSegment key={i} index={i} isDark={isDark} />
             ))}
         </div>
     )
 }
 
-function GhostSegment({ index }: { index: number }) {
+function GhostSegment({ index, isDark }: { index: number, isDark: boolean }) {
+
     const isFace = index === 0
     const size = 100 - index * 6
     const delay = index * 0.1
@@ -35,8 +41,12 @@ function GhostSegment({ index }: { index: number }) {
                 height: size,
                 backgroundColor: isFace ? "white" : `rgba(0, 136, 170, ${0.4 - index * 0.03})`,
                 zIndex: 20 - index,
-                boxShadow: isFace ? "0 0 20px rgba(255,255,255,0.2)" : "none",
+                boxShadow: isFace 
+                    ? (isDark ? "0 0 20px rgba(255,255,255,0.2)" : "0 0 20px rgba(0,136,170,0.2)") 
+                    : "none",
             }}
+
+
         >
             {isFace && (
                 <div className="relative w-full h-full">
@@ -55,12 +65,7 @@ function GhostSegment({ index }: { index: number }) {
                     </div>
                 </div>
             )}
-            {/* Bubbling Particles (Subtle) - Only on body segments to avoid overlapping eyes */}
-            {!isFace && (
-                <div className="absolute inset-0 blur-[5px] opacity-30 pointer-events-none">
-                    <div className="absolute w-[8px] h-[8px] bg-primary rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-ghost-bubbling" />
-                </div>
-            )}
         </motion.div>
     )
 }
+

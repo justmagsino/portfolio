@@ -44,26 +44,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     if (fullscreen) {
         return (
             <div
-                className="fixed inset-0 z-[60] flex items-center justify-center"
+                className="fixed inset-0 z-[200] flex items-center justify-center"
                 style={{ backgroundColor: "rgba(0,0,0,0.95)" }}
                 onClick={() => setFullscreen(false)}
             >
                 <button
                     onClick={() => setFullscreen(false)}
-                    className="absolute top-4 right-4 z-10 flex items-center justify-center w-9 h-9 rounded-full bg-black/60 border border-white/20 hover:border-white/40 text-white transition-all"
+                    className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-black/60 border border-white/20 hover:border-white/40 text-white transition-all"
                 >
-                    <X className="w-5 h-5" />
+                    <X className="w-6 h-6" />
                 </button>
 
                 {images.length > 1 && (
                     <>
                         <button onClick={(e) => { e.stopPropagation(); prev(); }}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-black/60 border border-white/20 hover:bg-black/90 text-white transition-all z-10">
-                            <ChevronLeft className="w-6 h-6" />
+                            className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-black/60 border border-white/20 hover:bg-black/90 text-white transition-all z-10">
+                            <ChevronLeft className="w-8 h-8" />
                         </button>
                         <button onClick={(e) => { e.stopPropagation(); next(); }}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-black/60 border border-white/20 hover:bg-black/90 text-white transition-all z-10">
-                            <ChevronRight className="w-6 h-6" />
+                            className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-black/60 border border-white/20 hover:bg-black/90 text-white transition-all z-10">
+                            <ChevronRight className="w-8 h-8" />
                         </button>
                     </>
                 )}
@@ -73,17 +73,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     src={images[current]}
                     alt={`${project.title} screenshot ${current + 1}`}
                     onClick={(e) => e.stopPropagation()}
-                    style={{ maxWidth: "85vw", maxHeight: "85vh", objectFit: "contain", borderRadius: 12 }}
+                    style={{ maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain", borderRadius: 12 }}
                     draggable={false}
                 />
 
                 {/* Dot indicators */}
                 {images.length > 1 && (
-                    <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2">
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
                         {images.map((_, i) => (
                             <button key={i} onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
                                 className="rounded-full transition-all"
-                                style={{ width: i === current ? 20 : 8, height: 8, backgroundColor: i === current ? "#38bdf8" : "rgba(255,255,255,0.35)" }}
+                                style={{ width: i === current ? 24 : 10, height: 10, backgroundColor: i === current ? "#38bdf8" : "rgba(255,255,255,0.35)" }}
                             />
                         ))}
                     </div>
@@ -95,112 +95,123 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     /* ── MODAL ── */
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ backgroundColor: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)" }}
+            className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-6"
+            style={{ 
+                backgroundColor: "rgba(0,0,0,0.8)", 
+                backdropFilter: typeof window !== 'undefined' && window.innerWidth < 768 ? "none" : "blur(12px)" 
+            }}
             onClick={onClose}
         >
             <div
-                className="relative bg-card border border-border rounded-2xl shadow-2xl overflow-hidden"
-                style={{ width: "100%", maxWidth: 680, maxHeight: "90vh", display: "flex", flexDirection: "column" }}
+                className="relative bg-card border border-border/50 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col w-full animate-in fade-in zoom-in duration-300"
+                style={{ maxWidth: 720, height: "85vh", maxHeight: 900, overscrollBehavior: "contain" }}
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Close button */}
+                {/* Close button (Fixed) */}
                 <button onClick={onClose}
-                    className="absolute top-3 right-3 z-20 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:border-white/30 text-white transition-all">
-                    <X className="w-4 h-4" />
+                    className="absolute top-5 right-5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-black/70 hover:scale-110 active:scale-95 transition-all shadow-xl">
+                    <X className="w-5 h-5" />
                 </button>
 
-                {/* ── IMAGE (click to fullscreen) ── */}
-                <div
-                    className="relative shrink-0 cursor-zoom-in p-6 bg-muted/30 dark:bg-black"
-                    style={{ height: 320 }}
-                    onClick={() => setFullscreen(true)}
-                    title="Click to fullscreen"
-                >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src={images[current]}
-                        alt={`${project.title} screenshot ${current + 1}`}
-                        className="relative z-[1]"
-                        style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
-                        draggable={false}
-                    />
+                {/* Single Scrollable Area */}
+                <div className="overflow-y-auto flex-1 scrollbar-none sm:scrollbar-thin">
+                    
+                    {/* ── IMAGE SECTION ── */}
+                    <div
+                        className="relative shrink-0 cursor-zoom-in p-8 bg-muted/10 dark:bg-black/20 flex items-center justify-center min-h-[300px] sm:min-h-[420px]"
+                        onClick={() => setFullscreen(true)}
+                        title="Click to expand"
+                    >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={images[current]}
+                            alt={`${project.title} screenshot ${current + 1}`}
+                            className="relative z-[1] drop-shadow-2xl"
+                            style={{ width: "100%", height: "auto", maxHeight: "50vh", objectFit: "contain", display: "block", borderRadius: 16 }}
+                            draggable={false}
+                        />
 
-                    {/* Fullscreen hint */}
-                    <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-md bg-black/50 text-white/50 text-xs">
-                        <Maximize2 className="w-3 h-3" /> Click to expand
+                        {/* Fullscreen hint */}
+                        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md text-white/70 text-[10px] font-bold uppercase tracking-widest border border-white/10">
+                            <Maximize2 className="w-3 h-3" /> Click to expand
+                        </div>
+
+                        {/* Prev/Next Navigation */}
+                        {images.length > 1 && (
+                            <>
+                                <button onClick={(e) => { e.stopPropagation(); prev(); }}
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 hover:bg-black/80 text-white transition-all shadow-lg active:scale-90">
+                                    <ChevronLeft className="w-5 h-5" />
+                                </button>
+                                <button onClick={(e) => { e.stopPropagation(); next(); }}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 hover:bg-black/80 text-white transition-all shadow-lg active:scale-90">
+                                    <ChevronRight className="w-5 h-5" />
+                                </button>
+
+                                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                                    {images.map((_, i) => (
+                                        <button key={i} onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
+                                            className="rounded-full transition-all"
+                                            style={{ width: i === current ? 24 : 8, height: 8, backgroundColor: i === current ? "#38bdf8" : "rgba(255,255,255,0.25)" }}
+                                        />
+                                    ))}
+                                </div>
+                            </>
+                        )}
                     </div>
 
-                    {/* Bottom gradient */}
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-card to-transparent" />
+                    {/* ── CONTENT SECTION ── */}
+                    <div className="p-8 sm:p-12 space-y-8">
+                        <div className="space-y-4">
+                            <h2 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight leading-tight">
+                                {project.title}
+                            </h2>
+                            <div className="h-1 w-20 bg-primary rounded-full" />
+                        </div>
 
-                    {/* Prev/Next */}
-                    {images.length > 1 && (
-                        <>
-                            <button onClick={(e) => { e.stopPropagation(); prev(); }}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:bg-black/90 text-white transition-all">
-                                <ChevronLeft className="w-4 h-4" />
-                            </button>
-                            <button onClick={(e) => { e.stopPropagation(); next(); }}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/60 border border-white/10 hover:bg-black/90 text-white transition-all">
-                                <ChevronRight className="w-4 h-4" />
-                            </button>
+                        <div className="space-y-6">
+                            <p className="text-muted-foreground text-lg leading-relaxed text-justify">
+                                {project.description}
+                            </p>
 
-                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
-                                {images.map((_, i) => (
-                                    <button key={i} onClick={(e) => { e.stopPropagation(); setCurrent(i); }}
-                                        className="rounded-full transition-all"
-                                        style={{ width: i === current ? 20 : 8, height: 8, backgroundColor: i === current ? "#38bdf8" : "rgba(255,255,255,0.35)" }}
-                                    />
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2.5">
+                                {project.tags.map((tag) => (
+                                    <span key={tag} className="px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl border border-border/50 text-muted-foreground bg-foreground/5 transition-colors hover:border-primary/30">
+                                        {tag}
+                                    </span>
                                 ))}
                             </div>
-                        </>
-                    )}
-                </div>
-
-                {/* ── SCROLLABLE CONTENT ── */}
-                <div style={{ overflowY: "auto", flex: 1 }}>
-                    <div className="p-6 space-y-5">
-                        {/* Title */}
-                        <h2 className="text-xl font-bold text-foreground">{project.title}</h2>
-
-                        {/* Description */}
-                        <p className="text-muted-foreground text-sm leading-relaxed text-justify">{project.description}</p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
-                                <span key={tag} className="px-3 py-1 text-xs font-medium rounded-full border border-border text-muted-foreground bg-foreground/5">
-                                    {tag}
-                                </span>
-                            ))}
                         </div>
 
                         {/* Thumbnail strip */}
                         {images.length > 1 && (
-                            <div>
-                                <p className="text-xs uppercase tracking-widest text-muted-foreground/60 mb-3 font-semibold">Screenshots</p>
-                                <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 4 }}>
+                            <div className="pt-4 space-y-4">
+                                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground/60 font-black">Screenshots</p>
+                                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none -mx-2 px-2">
                                     {images.map((src, i) => (
                                         <button key={i} onClick={() => setCurrent(i)}
-                                            className="bg-muted/50 dark:bg-black"
+                                            className="relative shrink-0 rounded-2xl overflow-hidden bg-muted/20 border-2 transition-all duration-300"
                                             style={{
-                                                flexShrink: 0, width: 96, height: 64, borderRadius: 8, overflow: "hidden",
-                                                border: `2px solid ${i === current ? "hsl(var(--primary))" : "transparent"}`,
-                                                padding: 0, cursor: "pointer", transition: "border-color 0.2s"
+                                                width: 140, height: 80,
+                                                borderColor: i === current ? "hsl(var(--primary))" : "transparent",
+                                                opacity: i === current ? 1 : 0.6,
+                                                transform: i === current ? "scale(1.05)" : "scale(1)"
                                             }}>
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img src={src} alt={`Screenshot ${i + 1}`}
-                                                style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                                                className="w-full h-full object-cover"
                                                 draggable={false} />
                                         </button>
                                     ))}
                                 </div>
                             </div>
                         )}
+                        
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+

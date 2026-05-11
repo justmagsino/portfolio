@@ -427,7 +427,8 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 pointer-events-none" />
 
             {/* Content block at the bottom */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-card/40 backdrop-blur-md border-t border-border/50 transform transition-transform duration-500 group-hover/card:translate-y-0">
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-card/90 md:bg-card/40 md:backdrop-blur-md border-t border-border/50 transform transition-transform duration-500 group-hover/card:translate-y-0">
+
                 <div className="space-y-3">
                     <div className="flex items-center justify-between gap-4">
                         <div className="flex-1 overflow-hidden">
