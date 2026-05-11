@@ -22,7 +22,7 @@ export default function Home() {
             <main className={`min-h-screen transition-opacity duration-1000 ${showIntro ? "opacity-0 h-screen overflow-hidden" : "opacity-100"}`}>
                 <Hero />
                 <Projects projects={projects} />
-                <Skills skills={skills} />
+                <Skills />
                 <Contact />
 
                 <footer className="py-8 px-4 border-t border-border/30 text-center text-muted-foreground/50 text-xs">

@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Link as NextLink } from "lucide-react"; // Keeping unused just to avoid empty line issues if needed, or simply remove. Actually let's just remove the import cleanly.
 import Link from "next/link";
+import { MarqueeText } from "./marquee-text";
 
 function cn(...classes: Array<string | undefined | null | false>) {
     return classes.filter(Boolean).join(" ");
@@ -431,17 +432,12 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
 
                 <div className="space-y-3">
                     <div className="flex items-center justify-between gap-4">
-                        <div className="flex-1 overflow-hidden">
-                            <motion.div
-                                variants={{
-                                    hovered: { x: "-20%" }
-                                }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            >
-                                <h3 className="text-xl font-bold text-foreground tracking-tight whitespace-nowrap">
+                        <div className="flex-1 min-w-0">
+                            <MarqueeText isHovered={active} speed={1.2}>
+                                <h3 className="text-xl font-bold text-foreground tracking-tight">
                                     {item.title}
                                 </h3>
-                            </motion.div>
+                            </MarqueeText>
                         </div>
                         {item.projectType && (
                             <span className="px-2 py-0.5 rounded-full bg-primary/20 border border-primary/30 text-[10px] font-bold text-primary uppercase tracking-widest whitespace-nowrap">
@@ -452,23 +448,19 @@ function DefaultFanCard({ item, active }: { item: CardStackItem; active: boolean
                     
                     {/* Tags */}
                     {item.tags && item.tags.length > 0 && (
-                        <div className="overflow-hidden -mr-6 pr-6">
-                            <motion.div 
-                                className="flex flex-nowrap gap-2 pb-1"
-                                variants={{
-                                    hovered: { x: "-30%" }
-                                }}
-                                transition={{ duration: 3, ease: "linear" }}
-                            >
-                                {item.tags.map((tag) => (
-                                    <span 
-                                        key={tag}
-                                        className="px-2 py-1 rounded bg-foreground/5 border border-border text-[9px] font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap"
-                                    >
-                                        {tag}
-                                    </span>
-                                ))}
-                            </motion.div>
+                        <div className="w-full">
+                            <MarqueeText speed={1.5} isHovered={active}>
+                                <div className="flex gap-2">
+                                    {item.tags.map((tag) => (
+                                        <span 
+                                            key={tag}
+                                            className="px-2 py-1 rounded bg-foreground/5 border border-border text-[9px] font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap"
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </MarqueeText>
                         </div>
                     )}
                 </div>

@@ -1,7 +1,6 @@
-"use client";
-
 import { useState } from "react";
 import { Mail, Phone, MapPin, FileText, Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Contact() {
     const [copied, setCopied] = useState<{ phone: boolean; address: boolean; email: boolean }>({
@@ -27,20 +26,30 @@ export function Contact() {
 
     return (
         <section id="contact" className="relative py-24 px-4 overflow-hidden">
-            
             <div className="relative z-10 max-w-4xl mx-auto text-center space-y-10">
-
                 {/* Header */}
-                <div className="space-y-3">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="space-y-3"
+                >
                     <h2 className="text-3xl md:text-5xl font-bold text-foreground">
                         Let&apos;s <span className="text-primary italic">Connect</span>
                     </h2>
                     <p className="text-muted-foreground text-sm md:text-base">
                         Interested in working together? Feel free to reach out!
                     </p>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 overflow-visible">
+                <motion.div 
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-4 overflow-visible"
+                >
                     {/* Gmail — copies to clipboard */}
                     <div className="relative">
                         <span
@@ -52,7 +61,7 @@ export function Contact() {
                         </span>
                         <button
                             onClick={() => handleCopy("email", "justmagsino6@gmail.com")}
-                            className="flex flex-col items-center gap-3 py-6 px-4 rounded-2xl border border-border/40 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group text-center w-full"
+                            className="flex flex-col items-center gap-3 py-6 px-4 rounded-2xl border border-border/40 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group text-center w-full shadow-sm hover:shadow-primary/5"
                             title="Click to copy email"
                         >
                             {copied.email ? (
@@ -75,7 +84,7 @@ export function Contact() {
                         </span>
                         <button
                             onClick={() => handleCopy("phone", "+639813775595")}
-                            className="flex flex-col items-center gap-3 py-6 px-4 rounded-2xl border border-border/40 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group text-center w-full"
+                            className="flex flex-col items-center gap-3 py-6 px-4 rounded-2xl border border-border/40 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group text-center w-full shadow-sm hover:shadow-primary/5"
                             title="Click to copy number"
                         >
                             {copied.phone ? (
@@ -98,7 +107,7 @@ export function Contact() {
                         </span>
                         <button
                             onClick={() => handleCopy("address", "Binangonan Rizal, PH")}
-                            className="flex flex-col items-center gap-3 py-6 px-4 rounded-2xl border border-border/40 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group text-center w-full"
+                            className="flex flex-col items-center gap-3 py-6 px-4 rounded-2xl border border-border/40 bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-200 cursor-pointer group text-center w-full shadow-sm hover:shadow-primary/5"
                             title="Click to copy address"
                         >
                             {copied.address ? (
@@ -109,10 +118,20 @@ export function Contact() {
                             <span className="text-sm text-foreground/80 font-medium">Binangonan Rizal, PH</span>
                         </button>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* View Resume button */}
-                <div>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ 
+                        duration: 0.6, 
+                        delay: 0.4, 
+                        type: "spring",
+                        bounce: 0.4
+                    }}
+                >
                     <a
                         href="/Magsino Resume.pdf"
                         target="_blank"
@@ -122,7 +141,7 @@ export function Contact() {
                         <FileText className="w-4 h-4" />
                         View Resume
                     </a>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

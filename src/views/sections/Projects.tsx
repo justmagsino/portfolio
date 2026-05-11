@@ -11,6 +11,8 @@ interface ProjectsProps {
     projects: Project[];
 }
 
+import { motion } from "framer-motion";
+
 export function Projects({ projects }: ProjectsProps) {
     const [selected, setSelected] = useState<Project | null>(null);
 
@@ -29,7 +31,13 @@ export function Projects({ projects }: ProjectsProps) {
         <section id="projects" className="relative w-full overflow-hidden py-24 px-4">
             {/* Content */}
             <div className="relative max-w-7xl mx-auto w-full space-y-12">
-                <div className="text-center space-y-4">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="text-center space-y-4"
+                >
                     <h2 className={cn("text-3xl md:text-5xl font-bold text-foreground tracking-tight")}>
                         Featured <span className="text-primary italic">Projects</span>
                     </h2>
@@ -37,9 +45,15 @@ export function Projects({ projects }: ProjectsProps) {
                         A selection of my recent engineering work, focusing on performance,
                         usability, and clean code.
                     </p>
-                </div>
+                </motion.div>
 
-                <div className="flex items-center justify-center w-full">
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                    className="flex items-center justify-center w-full"
+                >
                     <CardStack
                         items={cardItems}
                         initialIndex={0}
@@ -48,7 +62,7 @@ export function Projects({ projects }: ProjectsProps) {
                         pauseOnHover
                         showDots
                     />
-                </div>
+                </motion.div>
 
                 {/* View More Button */}
                 <div className="flex justify-center pt-8">
