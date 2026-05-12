@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, Link, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Link, Zap, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export interface TimelineItem {
   id: number;
@@ -115,17 +117,17 @@ export default function RadialOrbitalTimeline({
     const updateRadius = () => {
       const width = window.innerWidth;
       setIsMobile(width < 768);
-      
+
       if (width < 380) {
-        setOrbitRadius(100);
+        setOrbitRadius(120);
       } else if (width < 480) {
-        setOrbitRadius(115);
+        setOrbitRadius(140);
       } else if (width < 640) {
-        setOrbitRadius(135);
+        setOrbitRadius(140);
       } else if (width < 768) {
         setOrbitRadius(170);
       } else {
-        setOrbitRadius(200);
+        setOrbitRadius(320);
       }
     };
 
@@ -186,11 +188,11 @@ export default function RadialOrbitalTimeline({
 
   return (
     <div
-      className="relative w-full min-h-[500px] md:min-h-[600px] flex flex-col items-center justify-center bg-transparent"
+      className="relative w-full min-h-[600px] flex flex-col items-center justify-center bg-transparent overflow-hidden"
       ref={containerRef}
       onClick={handleContainerClick}
     >
-      <div className="relative w-full max-w-4xl h-[500px] md:h-[600px] flex items-center justify-center">
+      <div className="relative w-full max-w-4xl h-[600px] flex items-center justify-center">
         <div
           className="absolute w-full h-full flex items-center justify-center"
           ref={orbitRef}
@@ -200,7 +202,7 @@ export default function RadialOrbitalTimeline({
           }}
         >
           {/* Central Core */}
-          <div className={`absolute w-16 h-16 rounded-full bg-gradient-to-br from-primary via-primary/80 to-primary/40 flex items-center justify-center z-10 shadow-[0_0_30px_rgba(var(--primary),0.3)] transition-all duration-500 ${hoveredId ? "scale-110 shadow-[0_0_50px_rgba(var(--primary),0.6)]" : "animate-pulse"}`}>
+          <div className={`absolute w-16 h-16 rounded-full bg-gradient-to-br from-primary via-primary/80 to-primary/40 flex items-center justify-center z-10 shadow-[0_0_30px_rgba(var(--primary),0.3)] transition-all duration-200 ${activeNodeId ? "opacity-0 scale-50 pointer-events-none" : "opacity-100 scale-100"} ${hoveredId ? "scale-110 shadow-[0_0_50px_rgba(var(--primary),0.6)]" : "animate-pulse"}`}>
             <div className={`absolute w-20 h-20 rounded-full border border-primary/30 animate-ping opacity-60 ${hoveredId ? "border-primary/50" : ""}`}></div>
             <div
               className={`absolute w-24 h-24 rounded-full border border-primary/20 animate-ping opacity-40 ${hoveredId ? "border-primary/40" : ""}`}
@@ -210,13 +212,53 @@ export default function RadialOrbitalTimeline({
           </div>
 
           {/* Orbit Path - Enhanced visibility for light mode */}
-          <div 
+          <div
             className="absolute rounded-full border-2 border-primary/15 dark:border-primary/10 shadow-[0_0_15px_rgba(var(--primary),0.05)]"
-            style={{ 
-              width: `${orbitRadius * 2}px`, 
-              height: `${orbitRadius * 2}px` 
+            style={{
+              width: `${orbitRadius * 2}px`,
+              height: `${orbitRadius * 2}px`
             }}
           ></div>
+
+          {/* Connection Line to Active Node */}
+          <AnimatePresence>
+            {activeNodeId && (
+              <motion.div 
+                key={`line-${activeNodeId}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute top-1/2 left-1/2 w-0 h-0 pointer-events-none"
+              >
+                <svg className="overflow-visible absolute inset-0">
+                  {(() => {
+                    const idx = timelineData.findIndex(i => i.id === activeNodeId);
+                    const pos = calculateNodePosition(idx, timelineData.length);
+                    // The active node is rotated to the top (roughly y = -orbitRadius)
+                    return (
+                      <motion.line
+                        x1="0"
+                        y1={-orbitRadius + 60} // Start below the node icon and title
+                        x2="0"
+                        y2={isMobile ? 90 : -155} // Touch the top of the shifted desktop card
+                        className="stroke-primary/50"
+                        strokeWidth="1.5"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={{ pathLength: 1, opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ 
+                          duration: 0.3, 
+                          delay: 0.3, 
+                          ease: "easeOut" 
+                        }}
+                      />
+                    );
+                  })()}
+                </svg>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -257,9 +299,8 @@ export default function RadialOrbitalTimeline({
               >
                 {/* Glow behind node */}
                 <div
-                  className={`absolute rounded-full -inset-4 blur-xl transition-all duration-500 ${
-                    isExpanded || isHovered || isRelated ? "opacity-40" : "opacity-0"
-                  }`}
+                  className={`absolute rounded-full -inset-4 blur-xl transition-all duration-500 ${isExpanded || isHovered || isRelated ? "opacity-40" : "opacity-0"
+                    }`}
                   style={{
                     background: `radial-gradient(circle, var(--primary) 0%, transparent 70%)`,
                     transform: isHovered ? "scale(1.5)" : "scale(1)",
@@ -269,13 +310,12 @@ export default function RadialOrbitalTimeline({
                 <div
                   className={`
                   w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center
-                  ${
-                    isExpanded || isHovered
+                  ${isExpanded || isHovered
                       ? "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(var(--primary),0.5)]"
                       : isRelated
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background dark:bg-card text-foreground border-border shadow-sm"
-                  }
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-background dark:bg-card text-foreground border-border shadow-sm"
+                    }
                   border transition-all duration-300 transform
                   ${isExpanded ? "scale-125 md:scale-150" : isHovered ? "scale-110 md:scale-125 border-primary" : "hover:scale-110 hover:border-primary"}
                 `}
@@ -301,28 +341,63 @@ export default function RadialOrbitalTimeline({
           })}
 
           {/* Expanded Card - Rendered outside the loop for better positioning */}
-          {activeNodeId && (
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-[300]">
-              {timelineData.filter(item => item.id === activeNodeId).map(item => {
+          <AnimatePresence>
+            {activeNodeId && (
+              <motion.div 
+                key={`card-container-${activeNodeId}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className={isMobile 
+                  ? "fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-background/80 backdrop-blur-md pointer-events-auto"
+                  : "absolute top-1/2 left-1/2 w-0 h-0 pointer-events-none z-[50]"
+                }
+                onClick={() => isMobile && setActiveNodeId(null)}
+              >
+                {timelineData.filter(item => item.id === activeNodeId).map(item => {
                 const position = calculateNodePosition(
                   timelineData.findIndex(i => i.id === item.id),
                   timelineData.length
                 );
-                
-                // On desktop, position near the node. On mobile, center it.
-                const cardStyle = isMobile 
-                  ? { transform: 'translateY(140px)' } 
-                  : { transform: `translate(${position.x}px, ${position.y + 100}px)` };
+
+                // On desktop, shift down slightly to leave room for the line and stay inside the circle.
+                const cardStyle = isMobile
+                  ? {}
+                  : { transform: 'translateY(20px)' };
 
                 return (
-                  <Card 
+                  <motion.div
                     key={`card-${item.id}`}
-                    className="pointer-events-auto w-[280px] md:w-64 bg-card/95 backdrop-blur-xl border-primary/30 shadow-2xl overflow-visible transition-all duration-500 ease-out"
-                    style={cardStyle}
+                    initial={{ opacity: 0, scale: 0.95, y: isMobile ? 20 : 5 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: isMobile ? 20 : 5 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className={cn(
+                      "pointer-events-auto",
+                      isMobile ? "w-full max-w-[340px]" : "-translate-x-1/2 -translate-y-1/2 w-64"
+                    )}
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    {!isMobile && <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-px h-3 bg-primary/60"></div>}
-                    <CardHeader className="pb-2 p-4">
-                      <div className="flex justify-between items-center">
+                    <Card
+                      className={cn(
+                        "bg-card/95 border-primary/30 shadow-2xl overflow-visible relative",
+                        isMobile ? "w-full" : "w-64 h-[350px]"
+                      )}
+                      style={cardStyle}
+                    >
+                      {isMobile && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="absolute right-2 top-2 h-8 w-8 rounded-full text-muted-foreground hover:text-primary z-50"
+                          onClick={() => setActiveNodeId(null)}
+                        >
+                          <X size={18} />
+                        </Button>
+                      )}
+                    <CardHeader className="pb-2 p-4 flex-shrink-0">
+                      <div className={`flex justify-between items-center ${isMobile ? "pr-8" : ""}`}>
                         <Badge
                           className={`px-2 py-0 h-5 text-[10px] uppercase font-bold ${getStatusStyles(
                             item.status
@@ -331,8 +406,8 @@ export default function RadialOrbitalTimeline({
                           {item.status === "completed"
                             ? "Mastered"
                             : item.status === "in-progress"
-                            ? "Learning"
-                            : "Planned"}
+                              ? "Learning"
+                              : "Planned"}
                         </Badge>
                         <span className="text-[10px] font-mono text-muted-foreground font-bold">
                           {item.date}
@@ -342,7 +417,7 @@ export default function RadialOrbitalTimeline({
                         {item.title}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="text-[12px] text-muted-foreground p-4 pt-0">
+                    <CardContent className="text-[12px] text-muted-foreground p-4 pt-0 overflow-y-auto flex-1 custom-scrollbar">
                       <p className="leading-relaxed">{item.content}</p>
 
                       <div className="mt-4 pt-3 border-t border-border/60">
@@ -398,10 +473,12 @@ export default function RadialOrbitalTimeline({
                       )}
                     </CardContent>
                   </Card>
+                </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           )}
+        </AnimatePresence>
         </div>
       </div>
     </div>

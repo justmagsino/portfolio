@@ -18,7 +18,7 @@ export default function Home() {
     return (
         <>
             <LandingScreen onComplete={() => setShowIntro(false)} />
-            
+
             <main className={`min-h-screen transition-opacity duration-1000 ${showIntro ? "opacity-0 h-screen overflow-hidden" : "opacity-100"}`}>
                 <Hero />
                 <Projects projects={projects} />

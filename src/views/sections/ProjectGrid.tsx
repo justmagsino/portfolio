@@ -18,7 +18,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
 
     return (
         <>
-            <motion.div 
+            <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 initial="hidden"
                 whileInView="show"
@@ -42,8 +42,8 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                                 hidden: { opacity: 0, scale: 0.8, y: 50, rotateX: 10 },
                                 show: { opacity: 1, scale: 1, y: 0, rotateX: 0 }
                             }}
-                            transition={{ 
-                                duration: 0.7, 
+                            transition={{
+                                duration: 0.7,
                                 ease: [0.21, 1.11, 0.81, 0.99]
                             }}
                             viewport={{ once: false, margin: "-50px" }}
@@ -83,12 +83,12 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                                         </span>
                                     )}
                                 </div>
-                                
+
                                 <div className="w-full">
                                     <MarqueeText className="w-full" speed={1.5} isHovered={isHovered}>
                                         <div className="flex gap-2">
                                             {project.tags.map((tag) => (
-                                                <span 
+                                                <span
                                                     key={tag}
                                                     className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-foreground/5 border border-border text-muted-foreground group-hover:text-primary transition-colors whitespace-nowrap"
                                                 >

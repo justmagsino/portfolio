@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import RadialOrbitalTimeline, { TimelineItem } from "@/components/ui/radial-orbital-timeline";
-import { 
-    Code2, 
-    Database, 
-    Layers, 
-    Smartphone, 
-    Cpu, 
-    Globe, 
-    Workflow, 
+import {
+    Code2,
+    Database,
+    Layers,
+    Smartphone,
+    Cpu,
+    Globe,
+    Workflow,
     Palette,
     Braces,
     Github
@@ -121,7 +121,7 @@ export function Skills() {
         <section id="skills" className="relative py-24 px-4 min-h-[500px] md:min-h-[600px]">
             <div className="relative z-10 max-w-6xl mx-auto space-y-10">
                 {/* Header */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, margin: "-100px" }}
@@ -137,13 +137,13 @@ export function Skills() {
                 </motion.div>
 
                 {/* Orbital Timeline */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                     whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                     viewport={{ once: false, margin: "-100px" }}
-                    transition={{ 
-                        duration: 1, 
-                        delay: 0.2, 
+                    transition={{
+                        duration: 1,
+                        delay: 0.2,
                         ease: "easeOut",
                         type: "spring",
                         stiffness: 50
