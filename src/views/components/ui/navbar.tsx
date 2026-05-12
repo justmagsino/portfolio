@@ -15,7 +15,7 @@ export const Navbar = () => {
     const [scrolled, setScrolled] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [activeSection, setActiveSection] = useState("home")
-    const { setShowIntro } = useIntro()
+    const { showIntro, setShowIntro } = useIntro()
     const { theme, toggleTheme } = useTheme()
     const pathname = usePathname()
     const router = useRouter()
@@ -38,16 +38,15 @@ export const Navbar = () => {
 
     useEffect(() => {
         if (isProjectsPage) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setActiveSection("projects")
             return
         }
 
-        if (!isHomePage) return
+        if (!isHomePage || showIntro) return
 
         const observerOptions = {
             root: null,
-            rootMargin: "-40% 0px -40% 0px",
+            rootMargin: "-25% 0px -25% 0px",
             threshold: 0,
         }
 
@@ -62,13 +61,20 @@ export const Navbar = () => {
         const observer = new IntersectionObserver(observerCallback, observerOptions)
 
         const sections = ["home", "projects", "skills", "contact"]
-        sections.forEach((id) => {
-            const el = document.getElementById(id)
-            if (el) observer.observe(el)
-        })
+        
+        // Use a small timeout to ensure dynamic components have finished mounting
+        const timeoutId = setTimeout(() => {
+            sections.forEach((id) => {
+                const el = document.getElementById(id)
+                if (el) observer.observe(el)
+            })
+        }, 500)
 
-        return () => observer.disconnect()
-    }, [isHomePage, isProjectsPage])
+        return () => {
+            clearTimeout(timeoutId)
+            observer.disconnect()
+        }
+    }, [isHomePage, isProjectsPage, showIntro])
 
     const navLinks: { name: string; href: string; id: string; isExternal?: boolean }[] = [
         { name: "Home", href: "#", id: "home" },

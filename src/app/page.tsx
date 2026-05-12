@@ -8,8 +8,8 @@ import { useIntro } from "@/context/IntroContext";
 
 const Hero = dynamic(() => import("@/views/sections/Hero").then(m => m.Hero), { ssr: true });
 const Projects = dynamic(() => import("@/views/sections/Projects").then(m => m.Projects), { ssr: false });
-const Skills = dynamic(() => import("@/views/sections/Skills").then(m => m.Skills), { ssr: true });
-const Contact = dynamic(() => import("@/views/sections/Contact").then(m => m.Contact), { ssr: true });
+const Skills = dynamic(() => import("@/views/sections/Skills").then(m => m.Skills), { ssr: false });
+const Contact = dynamic(() => import("@/views/sections/Contact").then(m => m.Contact), { ssr: false });
 
 export default function Home() {
     const { projects, skills } = getPortfolioData();

@@ -7,7 +7,7 @@ export const ShootingStars = () => {
 
     useEffect(() => {
         const isMobile = window.innerWidth < 768;
-        const count = isMobile ? 12 : 30;
+        const count = isMobile ? 6 : 30;
         
         setStars(Array.from({ length: count }).map((_, i) => {
             const tailLength = Math.floor(Math.random() * (750 - 500 + 1) + 500) / 100

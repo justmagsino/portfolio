@@ -48,10 +48,6 @@ export function LandingScreen({ onComplete }: LandingScreenProps) {
                         <AnimatedClouds />
                     </div>
 
-                    {/* Neon Cursor for Intro (Higher Z-Index) */}
-                    <div className="absolute inset-0 z-0">
-                        <NeonCursor />
-                    </div>
 
                     {/* Background Circles (Inspired by user request) */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
