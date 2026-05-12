@@ -65,10 +65,10 @@ const techStack: TimelineItem[] = [
         id: 5,
         title: "Backend Development",
         date: "Full Stack",
-        content: "Developing robust server-side logic and APIs using Laravel, PHP, and Python.",
+        content: "Developing robust server-side logic and APIs using Laravel, PHP, and Python scripts.",
         category: "Backend",
         icon: Database,
-        relatedIds: [6, 7],
+        relatedIds: [6, 9],
         status: "completed",
         energy: 85,
     },
@@ -79,20 +79,9 @@ const techStack: TimelineItem[] = [
         content: "Building enterprise-grade applications with Laravel's elegant ecosystem.",
         category: "Backend",
         icon: Layers,
-        relatedIds: [5, 7],
+        relatedIds: [5, 9],
         status: "completed",
         energy: 80,
-    },
-    {
-        id: 7,
-        title: "Python / AI",
-        date: "Automation",
-        content: "Integrating AI tools and automating complex workflows with Python and n8n.",
-        category: "Backend",
-        icon: Cpu,
-        relatedIds: [5, 6, 9],
-        status: "completed",
-        energy: 75,
     },
     {
         id: 8,
@@ -107,14 +96,14 @@ const techStack: TimelineItem[] = [
     },
     {
         id: 9,
-        title: "n8n / Automation",
-        date: "Workflow",
-        content: "Connecting services and automating business processes without writing manual glue code.",
+        title: "n8n / AI",
+        date: "Intelligence",
+        content: "Integrating AI tools and automating complex business workflows using n8n and large language models.",
         category: "Tools",
         icon: Workflow,
-        relatedIds: [7, 10],
+        relatedIds: [5, 10],
         status: "in-progress",
-        energy: 60,
+        energy: 75,
     },
     {
         id: 10,
@@ -127,11 +116,12 @@ const techStack: TimelineItem[] = [
         status: "completed",
         energy: 85,
     }
+
 ];
 
 export function Skills() {
     return (
-        <section id="skills" className="relative py-24 px-4 overflow-hidden min-h-[500px] md:min-h-[600px]">
+        <section id="skills" className="relative py-24 px-4 min-h-[500px] md:min-h-[600px]">
             <div className="relative z-10 max-w-6xl mx-auto space-y-10">
                 {/* Header */}
                 <motion.div 
