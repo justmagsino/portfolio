@@ -61,8 +61,8 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
                                     quality={75}
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     className="object-contain p-4 transition-all duration-700 group-hover:scale-110"
-                                    priority={index === 0}
-                                    loading={index === 0 ? "eager" : "lazy"}
+                                    priority={index < 3}
+                                    loading={index < 3 ? "eager" : "lazy"}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             </div>

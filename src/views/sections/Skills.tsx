@@ -7,12 +7,9 @@ import {
     Smartphone, 
     Cpu, 
     Globe, 
-    Terminal, 
     Workflow, 
     Palette,
     Braces,
-    Coffee,
-    Search,
     Github
 } from "lucide-react";
 
